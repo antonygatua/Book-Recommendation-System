@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale">
+      <title> Book Recommendation Sytem</title>
+
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+      <script src="https://kit.fontawesome.com/dab117a70e.js" crossorigin="anonymous"></script>
+
+    </head>
+    <body>
+      <!--Header Section-->
+      <header>
+        <div class="container">
+          <div class="logo">
+            <a href="/">
+              <img src="{{ url_for('static', filename='images/images.jpeg') }}" alt="Book Recommender System Logo">
+            </a>
+          </div>
+          <h1>Book Recommender System</h1>
+          <nav>
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="/recommend">Recommend</a></li>
+              <li><a href="/books">Trending</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      {% if section == 'hero' %}
+      <section class="hero">
+        <div class="hero-overlay">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 text-center">
+                <h1>Discover Your Next Favorite Book</h1>
+                <p>Get personalized book recommendations based on your interests and reading history.</p>
+                <a href="/recommend" class="btn btn-primary btn-lg">Browse Books</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="categories">
+        <div class="row">
+          <div class="col-md-4">
+            <h2>Categories</h2>
+          </div>
+          <div class="col-md-8">
+            <ul class="category-list">
+              <li><a href="#">Fiction</a></li>
+              <li><a href="#">Non-fiction</a></li>
+              <li><a href="#">Mystery</a></li>
+              <li><a href="#">Romance</a></li>
+              <li><a href="#">Biography</a></li>
+              <li><a href="#">Business</a></li>
+            </ul>
+
+            <ul class="category-list">
+              <li><a href="#">Fantasy</a></li>
+              <li><a href="#">Horror</a></li>
+              <li><a href="#">Poetry</a></li>
+              <li><a href="#">Self-Help</a></li>
+              <li><a href="#">Travel</a></li>
+              <li><a href="#">Science and Technology</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {% elif section == 'recommend' %}
+      <section class="book-recommendation" id="recommend">
+        <div class="reco-container">
+          <div class="reco-form">
+            <div class="form-header">
+              <h2>Book Recommendation</h2>
+            </div>
+            <div class="form-content">
+              <form role="search" action="/recommend_books" method="post">
+                <label for="title">Enter the title of the book:</label>
+                <input name="user_input" type="search" id="title" placeholder="e.g Harry Potter and the Goblet of Fire">
+                <button type="submit">Recommend</button>
+              </form>
+            </div>
+          </div>
+          <div class="reco-image">
+            <img src="{{ url_for('static', filename='images/OIP.jpg') }}" alt="img-form">
+          </div>
+        </div>
+      </section>
+
+      {% elif section == 'recommender' %}
+      <section class="recommendation-results">
+        {% if data %}
+
+          {% for i in data %}
+          <div class="out-book-card">
+            <div class="out-book-image">
+              <img src="{{i[2]}}" alt="">
+            </div>
+            <div class="out-book-details">
+              <h3>{{i[0]}}</h3>
+              <h4>{{i[1]}}</h4>
+            </div>
+          </div>
+          {% endfor %}
+
+        {% endif %}
+      </section>
+      {% elif section == 'books' %}
+      <!--Trending Books Section-->
+      <section class="book-section">
+        <div class="book-container">
+          <div class="title-wrapper">
+            <h2>Trending Books</h2>
+          </div>
+          <div class="card-row">
+            <!-- cards will be added here -->
+            <div class="card">
+              <img src="http://images.amazon.com/images/P/0375406328.01.LZZZZZZZ.jpg" alt="Book Cover" class="card-img">
+              <div class="card-content">
+                <h3 class="card-title">Lying Awake</h3>
+                <p class="card-author">Mark Salzman</p>
+                <div class="card-rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star "></span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="http://images.amazon.com/images/P/042518630X.01.LZZZZZZZ.jpg" alt="Book Cover" class="card-img">
+              <div class="card-content">
+                <h3 class="card-title">Purity in Death</h3>
+                <p class="card-author">J.D. Robb</p>
+                <div class="card-rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="http://images.amazon.com/images/P/0446310786.01.MZZZZZZZ.jpg" alt="Book Cover" class="card-img">
+              <div class="card-content">
+                <h3 class="card-title">To Kill a Mockingbird</h3>
+                <p class="card-author">Harper Lee</p>
+                <div class="card-rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="http://images.amazon.com/images/P/0553582909.01.LZZZZZZZ.jpg" alt="Book Cover" class="card-img">
+              <div class="card-content">
+                <h3 class="card-title">Icebound</h3>
+                <p class="card-author">Dean R. Koontz</p>
+                <div class="card-rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-row">
+            <!-- cards will be added here -->
+            <div class="card">
+              <img src="http://images.amazon.com/images/P/0689821166.01.LZZZZZZZ.jpg" alt="Book Cover" class="card-img">
+              <div class="card-content">
+                <h3 class="card-title">Flood : Mississippi 1927</h3>
+                <p class="card-author">Kathleen Duey</p>
+                <div class="card-rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="http://images.amazon.com/images/P/0380715899.01.LZZZZZZZ.jpg" alt="Book Cover" class="card-img">
+              <div class="card-content">
+                <h3 class="card-title">A Soldier of the Great War</h3>
+                <p class="card-author">Mark Helprin</p>
+                <div class="card-rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="http://images.amazon.com/images/P/0671888587.01.LZZZZZZZ.jpg" alt="Book Cover" class="card-img">
+              <div class="card-content">
+                <h3 class="card-title">I'll Be Seeing You</h3>
+                <p class="card-author">Mary Higgins Clark</p>
+                <div class="card-rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <img src="http://images.amazon.com/images/P/0553582747.01.LZZZZZZZ.jpg" alt="Book Cover" class="card-img">
+              <div class="card-content">
+                <h3 class="card-title">From the Corner of His Eye</h3>
+                <p class="card-author">Dean Koontz</p>
+                <div class="card-rating">
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star checked"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {% elif section == 'contact' %}
+      <!--Frequently asked Question-->
+      <section class="faq-section">
+        <h2 class="section-title".faq-section.faq-section.faq-section>Frequently Asked Questions</h2>
+        <div class="faq-container">
+          <div class="faq-item">
+            <div class="question-item">
+              <div class="faq-question">What is a book recommender sytem?</div>
+              <div class="faq-toggle"></div>
+            </div>
+            <div class="faq-answer">
+              <p>A book recommender system is an AI-based technology that suggests books to users based on their preferences and behavior.</p>
+            </div>
+          </div> 
+          <div class="faq-item">
+            <div class="question-item">
+              <div class="faq-question">Is the recommender based on popularity on the books alone?</div>
+              <div class="faq-toggle"></div>
+            </div>
+            <div class="faq-answer">
+              <p>The popularity-based recommender system is solely based on the popularity of the books. It recommends books based on their popularity or the number of times they have been borrowed or rated by users.</p>
+            </div>
+          </div>  
+          
+          <div class="faq-item">
+            <div class="question-item">
+              <div class="faq-question">How are books recommended to users?</div>
+              <div class="faq-toggle"></div>
+            </div>
+            <div class="faq-answer">
+              <p>Books are recommended to users based on the ratings of other users with similar interests.</p>
+            </div>
+          </div>     
+
+          <div class="faq-item">
+            <div class="question-item">
+              <div class="faq-question">Can I specify the genres or types of books I'm interested in?</div>
+              <div class="faq-toggle"></div>
+            </div>
+            <div class="faq-answer">
+              <p>Yes, the book recommendation system allows users to input their preferences for specific genres or types of books, and will prioritize recommendations that fit those criteria.</p>
+            </div>
+          </div>     
+
+          <div class="faq-item">
+            <div class="question-item">
+              <div class="faq-question">How many books are recommended to the user?</div>
+              <div class="faq-toggle"></div>
+            </div>
+            <div class="faq-answer">
+              <p>The system only recommends five books. You can request the system to recommend more books based on the five given first.</p>
+            </div>
+          </div>     
+        </div>
+      </section>
+      
+      <section class="contact-section" id="contact">
+        <div class="contact-container">
+          <h2 class="section-title">Contact Us</h2>
+          <form class="contact-form" action="submit-form.php" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+      
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+      
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+      
+            <button type="submit">Send Message</button>
+          </form>
+        </div>
+      </section>
+
+      <footer>
+        <div class="footer-container">
+          <div class="social-links">
+            <a href="#" class="social-link twitter"><i class="fa fa-twitter"></i></a>
+            <a href="#" class="social-link facebook"><i class="fa fa-facebook"></i></a>
+            <a href="mailto:contact@example.com" class="social-link email"><i class="fa fa-envelope"></i></a>
+          </div>
+          <p>&copy; 2023 Book Recommendation</p>
+        </div>
+      </footer>
+      {% endif %}
+      
+      
+      <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    </body>  
